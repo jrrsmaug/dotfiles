@@ -7,7 +7,7 @@ root: /d/vportal
 # socket_name: foo
 
 # Runs before everything. Use it to start daemons etc.
-# pre: 
+#pre: 
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 pre_window: source ~/.env/envngi.sh /d/vportal jdk1.7.0_80_x64 && cd /d/vportal/workspace/vportal/

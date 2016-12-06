@@ -38,6 +38,9 @@ zstyle ':completion:*' fake-files   '/:c' '/:d' '/:e' '/:p' '/:s'
 
 zstyle ':omz:plugins:ssh-agent' identities 'private-id_rsa' 'nov015223-ossh' 'nov013462-ossh'
 
+#zstyle ':prezto:module:terminal' auto-title 'yes'
+
+
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -58,7 +61,10 @@ export EDITOR='emacsclient'
 alias edit="emacsclient -n"
 alias gll="gl -6"
 alias ll="ls -lha"
-alias mux=tmuxinator
+
+# slap a title on tmux
+titledmux() { set-window-title $2 ; tmuxinator "$@" ; }
+alias mux=titledmux
 
 alias tmux="TERM=xterm-256color tmux"
 
