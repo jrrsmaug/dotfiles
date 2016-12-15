@@ -1,2 +1,4 @@
 @ECHO OFF
-C:\Windows\System32\cmd.exe /A /Q /K C:\msys64\msys2_shell.bat
+set MSYS2_PATH_TYPE=inherit
+set MSYSTEM=MINGW64
+C:\git-sdk-64\usr\bin\mintty.exe --icon c:\git-sdk-64\msys2.ico "/usr/bin/zsh" --login

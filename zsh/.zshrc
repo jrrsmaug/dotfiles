@@ -69,13 +69,14 @@ alias mux=titledmux
 alias tmux="TERM=xterm-256color tmux"
 
 # maven aliases
+alias mvn="mvn -Djava.io.tmpdir=$TMP"
 alias mci="mvn clean install"
 
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/{bin,sbin}
-  /git-sdk-64/bin
   ~/emacs/bin
+  "/c/Program Files/Sublime Text 3"
   "/c/Program Files/nodejs"
   $(ruby -rubygems -e "puts Gem.user_dir")/bin
   $path
