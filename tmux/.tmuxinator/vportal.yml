@@ -29,6 +29,6 @@ pre_window: source ~/.env/envngi.sh /d/vportal jdk1.7.0_80_x64 && cd /d/vportal/
 
 windows:
   - commands: 
-  - db: tail -f -n +1 /c/ngi/opt/logs/db.log
-  - jboss: tail -f -n +1 /c/ngi/opt/logs/backend.log
-  - tomcat: tail -f -n +1 /c/ngi/opt/logs/frontend.log
+  - db: tail -f -n +1 /c/ngi/opt/log/db.log
+  - jboss: tail -f -n +1 /c/ngi/opt/log/backend.log
+  - tomcat: tail -f -n +1 /c/ngi/opt/log/frontend.log
