@@ -17,7 +17,7 @@ zplug "modules/git", from:prezto
 zplug "modules/ruby", from:prezto
 zplug "modules/syntax-highlighting", from:prezto
 zplug "modules/history-substring-search", from:prezto
-zplug "modules/autosuggestions", from:prezto
+#zplug "modules/autosuggestions", from:prezto
 zplug "modules/prompt", from:prezto
 zplug "hkupty/ssh-agent"
 zplug "psprint/history-search-multi-word"
@@ -56,7 +56,7 @@ zplug load --verbose
 # Customize to your needs...
 export TERM=xterm-256color
 
-export EDITOR='emacsclient'
+export EDITOR=subl
 
 alias edit="emacsclient -n"
 alias gll="gl -6"
