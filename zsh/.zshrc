@@ -58,7 +58,7 @@ export TERM=xterm-256color
 
 export EDITOR=subl
 
-alias edit="emacsclient -n"
+alias edit="subl"
 alias gll="gl -6"
 alias ll="ls -lha"
 
@@ -71,6 +71,18 @@ alias tmux="TERM=xterm-256color tmux"
 # maven aliases
 alias mvn="mvn -Djava.io.tmpdir=$TMP"
 alias mci="mvn clean install"
+
+git-svn-reintegrate-branch() {
+  git checkout master && git svn rebase && git checkout "$1" && git rebase master && git checkout master && git merge "$1"
+}
+
+alias killnode='taskkill -IM node.exe -f && taskkill -IM phantomjs.exe -f'
+theend () {
+  taskkill -IM node.exe -f
+  taskkill -IM phantomjs.exe -f
+  taskkill -IM java.exe -f
+  tmux kill-session -t apgon
+}
 
 # Set the list of directories that Zsh searches for programs.
 path=(
