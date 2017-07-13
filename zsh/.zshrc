@@ -55,6 +55,7 @@ zplug load --verbose
 
 # Customize to your needs...
 export TERM=xterm-256color
+eval "$(dircolors ~/.mycolors)";
 
 export EDITOR=subl
 
