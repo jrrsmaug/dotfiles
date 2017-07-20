@@ -77,6 +77,11 @@ git-svn-reintegrate-branch() {
   git checkout master && git svn rebase && git checkout "$1" && git rebase master && git checkout master && git merge "$1"
 }
 
+check-only() {
+  grep -R "it\.only" encores-apgonline/apgonline-frontend/test/.
+  grep -R "describe\.only" encores-apgonline/apgonline-frontend/test/.
+}
+
 alias killnode='taskkill -IM node.exe -f && taskkill -IM phantomjs.exe -f'
 theend () {
   taskkill -IM node.exe -f

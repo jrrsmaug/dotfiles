@@ -10,7 +10,7 @@ root: /d/encores
 # pre: 
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: source ~/.env/encores.sh /d/encores ibm-java-x86_64-71
+pre_window: source ~/.env/encores.sh
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -28,5 +28,6 @@ pre_window: source ~/.env/encores.sh /d/encores ibm-java-x86_64-71
 # post: tmux -CC attach -t encores
 
 windows:
-  - editor: cd /d/encores/workspace/de.aga.encores
-
+  - editor: cd $ENCORES_HOME
+  - websphere: tail -f $ENCORES_HOME/logs/was.log
+  - tomcat: tail -f $ENCORES_HOME/logs/tomcat.log
