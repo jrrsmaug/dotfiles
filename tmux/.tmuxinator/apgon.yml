@@ -28,12 +28,14 @@ root: /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend
 # post: tmux -CC attach -t vportal
 
 windows:
-  - editor:
-      layout: tiled
+  - tests:
+      layout: main-vertical
+      panes:
+        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend && npm run test:watch
+        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend && npm run dev-fake
+        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend
+  - selenium:
+      layout: main-vertical
       panes:
         - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend
-        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend
-        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend
-        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend && npm run test:watch
-  - dev-fake-server: cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend && npm run dev-fake
-  - selenium: cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend && npm run selenium-server
+        - cd /d/encores/workspace/de.aga.encores/encores-apgonline/apgonline-frontend && npm run selenium-server

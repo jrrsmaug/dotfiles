@@ -28,6 +28,7 @@ pre_window: source ~/.env/encores.sh
 # post: tmux -CC attach -t encores
 
 windows:
-  - editor: cd $ENCORES_HOME
+  - editor: cd $ENCORES_HOME/workspace/de.aga.encores
   - websphere: tail -f $ENCORES_HOME/logs/was.log
   - tomcat: tail -f $ENCORES_HOME/logs/tomcat.log
+  - apgonline: tail -f $ENCORES_HOME/logs/apgonline.log
