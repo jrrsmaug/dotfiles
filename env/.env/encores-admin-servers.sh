@@ -8,7 +8,7 @@ function stop-was {
 
 export ENCORES_HOME=/d/encores
 export WORKSPACE_HOME=$ENCORES_HOME/workspace/de.aga.encores
-export M2_HOME=$NGI_HOME/modules/maven/apache-maven-3.2.5
+export M2_HOME=$NGI_HOME/modules/build/maven/apache-maven-3.2.5
 export NGI_MODULES_DBMS=db2
 export NGI_MODULES_APP=was
 export PATH=$PATH:$M2_HOME/bin
@@ -19,7 +19,8 @@ cd $WORKSPACE_HOME
 export NGI_PKG_HOME=$WORKSPACE_HOME/pkg
 bash pkg/bin/run-backend.sh NGI_APP_DEBUG=SERVER NGI_APP_CONSOLE=JMX NGI_APP_PROFILER=JFR &> $ENCORES_HOME/logs/was.log &
 
-export JAVA_HOME=/d/encores/java/jdk1.7.0_80_x64
+#export JAVA_HOME=/d/encores/java/jdk1.7.0_80_x64
+export JAVA_HOME=/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64
 bash pkg/bin/run-frontend.sh NGI_APP_DEBUG=SERVER &> $ENCORES_HOME/logs/tomcat.log &
 bash pkg/bin/run-apgonline.sh NGI_APP_DEBUG=SERVER &> $ENCORES_HOME/logs/apgonline.log &
 

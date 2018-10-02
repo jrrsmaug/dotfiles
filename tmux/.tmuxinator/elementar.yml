@@ -1,16 +1,16 @@
-# ~/.tmuxinator/vjames.yml
+# ~/.tmuxinator/elementar.yml
 
-name: vjames
-root: ~/
+name: elementar
+root: /d/elementar
 
 # Optional tmux socket
 # socket_name: foo
 
 # Runs before everything. Use it to start daemons etc.
-# pre: sudo /etc/rc.d/mysqld start
+# pre: 
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: source ~/.env/envvars.sh /d/vjames java/jdk1.8.0_121_x64
+pre_window: source ~/.env/elementar.sh
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -25,7 +25,11 @@ pre_window: source ~/.env/envvars.sh /d/vjames java/jdk1.8.0_121_x64
 # attach: false
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
-# post: tmux -CC attach -t vjames
+# post: tmux -CC attach -t elementar
 
 windows:
-  - editor: cd /d/vjames/workspace/vjames
+  - editor: cd $ELEMENTAR_HOME/workspace
+  - commands: cd $ELEMENTAR_HOME/workspace
+  - db: tail -f $ELEMENTAR_HOME/logs/db.log
+  - backend: tail -f $ELEMENTAR_HOME/logs/backend.log
+  - frontend: tail -f $ELEMENTAR_HOME/logs/frontend.log
