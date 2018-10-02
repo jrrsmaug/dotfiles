@@ -11,7 +11,7 @@ function stop-all {
 
 export ELEMENTAR_HOME=/d/elementar
 export WORKSPACE_HOME=$ELEMENTAR_HOME/workspace
-export M2_HOME=$NGI_HOME/modules/maven/apache-maven-3.2.5
+export M2_HOME=$NGI_HOME/modules/build/maven/apache-maven-3.2.5
 export NGI_MODULES_DBMS=postgresql
 export NGI_MODULES_APP=jboss
 export PATH=$PATH:$M2_HOME/bin

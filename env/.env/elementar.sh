@@ -6,10 +6,10 @@ export NGI_MODULES_DBMS=postgresql
 export NGI_MODULES_APP=jboss
 
 
-export M2_HOME=$NGI_HOME/modules/maven/apache-maven-3.2.5
+export M2_HOME=$NGI_HOME/modules/build/maven/apache-maven-3.2.5
 export MAVEN_OPTS="-Xms4096m -Xmx4096m -XX:PermSize=1024M -XX:MaxPermSize=4096M"
 
-export JAVA_HOME=/c/ngi/opt/modules/java/jdk1.8.0_121_x64
+export JAVA_HOME=/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64
 export CLASSPATH=
 
 export ELEMENTAR_HOME=/d/elementar
@@ -22,8 +22,10 @@ path=(
 )
 
 forall () {
+  local LIGHT_GREEN="[1;32m"
+  local NO_COLOUR="[0m"
   for d in */ ; do
-  	echo $d
+  	echo $LIGHT_GREEN$d$NO_COLOUR
     pushd $d
     eval "$@"
 	if [[ "$?" -ne 0 ]] ; then
