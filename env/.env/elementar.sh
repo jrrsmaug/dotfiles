@@ -34,3 +34,5 @@ forall () {
     popd
   done
 }
+
+alias ele-build-all="mvn clean install -DskipTests -f de.bit.elementar.vertrag.system/build/maven -Pde.bit.elementar.all,de.novum.ngi.modules.tools.vgeree.ai"
