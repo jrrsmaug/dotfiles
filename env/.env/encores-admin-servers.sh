@@ -1,9 +1,12 @@
 #!/usr/bin/bash
-echo "starting servers"
+echo "admin servers"
 
 # set global envs
-function stop-was {
-	bash $NGI_HOME/modules/app/was/bin/shutdown.sh pkg/modules/app/was/etc/backend.properties
+function stop-all {
+	cd $WORKSPACE_HOME
+	bash pkg/bin/stop-apgonline.sh
+	bash pkg/bin/stop-backend.sh
+	bash pkg/bin/stop-frontend.sh
 }
 
 export ENCORES_HOME=/d/encores
@@ -19,8 +22,8 @@ cd $WORKSPACE_HOME
 export NGI_PKG_HOME=$WORKSPACE_HOME/pkg
 bash pkg/bin/run-backend.sh NGI_APP_DEBUG=SERVER NGI_APP_CONSOLE=JMX NGI_APP_PROFILER=JFR &> $ENCORES_HOME/logs/was.log &
 
-#export JAVA_HOME=/d/encores/java/jdk1.7.0_80_x64
-export JAVA_HOME=/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64
+export JAVA_HOME=/d/encores/java/jdk1.7.0_80_x64
+#export JAVA_HOME=/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64
 bash pkg/bin/run-frontend.sh NGI_APP_DEBUG=SERVER &> $ENCORES_HOME/logs/tomcat.log &
 bash pkg/bin/run-apgonline.sh NGI_APP_DEBUG=SERVER &> $ENCORES_HOME/logs/apgonline.log &
 
@@ -34,4 +37,4 @@ bash
 
 
 # shutdown servers after closing admin bash
-stop-was
+stop-all

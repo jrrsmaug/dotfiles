@@ -1,38 +1,56 @@
-#!/usr/bin/zsh
+#!/usr/bin/bash
+source ~/.env/ngi.sh
+echo "elementar dev"
 
-export NGI_HOME=/c/ngi/opt
+function doin() {
+  local YELLOW="[1;33m"
+  local NO_COLOUR="[0m"
+  echo $YELLOW$1$NO_COLOUR
+  if [ ! -d "$1" ]; then
+    echo "Directory does not exist"; return
+  fi
+  pushd "$1" > /dev/null
+  shift
+  eval "$@"
+  if [[ "$?" -ne 0 ]] ; then
+    echo "Failed command"; return
+  fi
+  popd > /dev/null
+}
+alias d=doin
 
-export NGI_MODULES_DBMS=postgresql
-export NGI_MODULES_APP=jboss
+function forsome() {
+  dirs=$1
+  shift
+  for d in $dirs*/ ; do
+    doin "$d" $@
+  done
+}
+alias fs=forsome
+alias f="forsome '*'"
 
 
-export M2_HOME=$NGI_HOME/modules/build/maven/apache-maven-3.2.5
-export MAVEN_OPTS="-Xms4096m -Xmx4096m -XX:PermSize=1024M -XX:MaxPermSize=4096M"
-
-export JAVA_HOME=/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64
-export CLASSPATH=
+export NGI_MODULES_DBMS=db2
+export NGI_MODULES_APP=was
 
 export ELEMENTAR_HOME=/d/elementar
 export ELEMENTAR_SRC=$ELEMENTAR_HOME/workspace
+export SST=$ELEMENTAR_SRC/de.bit.elementar.sst
+export VSYS=$ELEMENTAR_SRC/de.bit.elementar.vertrag.system
+export VKOM=$ELEMENTAR_SRC/de.bit.elementar.vertrag.sparte.kompakt
+export SSYS=$ELEMENTAR_SRC/de.bit.elementar.schaden.system
+export PC=$ELEMENTAR_SRC/de.novum.vger.pc
 
-path=(
-  $path
-  $M2_HOME/bin
-  $JAVA_HOME/bin
-)
+alias build-all="mvn clean install -DskipTests -f de.bit.elementar.vertrag.system/build/maven -Pde.bit.elementar.all"
+alias build-war="mvn clean install -am -DskipTests -f de.bit.elementar.vertrag.system -pl de.bit.elementar.vertrag.system:de.bit.elementar.vertrag.system.clients.ewc.war"
+alias system-reset="mvn clean install -DskipTests -Pde.novum.ngi.pkg.system-reset -pl pkg -f de.bit.elementar.vertrag.system"
+alias system-update="mvn clean install -DskipTests -Pde.novum.ngi.pkg.system-update -pl pkg -f de.bit.elementar.vertrag.system"
+alias system-update-nodata="mvn clean install -DskipTests -Pde.novum.ngi.pkg.system-update-nodata -pl pkg -f de.bit.elementar.vertrag.system"
 
-forall () {
-  local LIGHT_GREEN="[1;32m"
-  local NO_COLOUR="[0m"
-  for d in */ ; do
-  	echo $LIGHT_GREEN$d$NO_COLOUR
-    pushd $d
-    eval "$@"
-	if [[ "$?" -ne 0 ]] ; then
-	  echo "Failed command"; exit
-	fi
-    popd
-  done
-}
+alias build-all-was="build-all -DNGI_MODULES_APP=was"
+alias system-reset-was="system-reset -DNGI_MODULES_APP=was"
 
-alias ele-build-all="mvn clean install -DskipTests -f de.bit.elementar.vertrag.system/build/maven -Pde.bit.elementar.all,de.novum.ngi.modules.tools.vgeree.ai"
+alias s-build-all="mvn clean install -DskipTests -f de.bit.elementar.schaden.system"
+alias s-system-reset="mvn clean install -DskipTests -Pde.novum.ngi.pkg.system-reset -f de.bit.elementar.schaden.system"
+
+cd $ELEMENTAR_SRC
