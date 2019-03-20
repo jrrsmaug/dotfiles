@@ -174,7 +174,8 @@ export TZ=GST-1GDT date
 
 #export JAVA_HOME="/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64"
 
-export TERM=cygwin
+#export TERM=cygwin
+export TERM=xterm-256color
 
 # thanks to:  http://blog.blindgaenger.net/colorize_maven_output.html
 # and: http://johannes.jakeapp.com/blog/category/fun-with-linux/200901/maven-colorized

@@ -64,7 +64,6 @@ export EDITOR=subl
 alias edit="subl"
 alias gll="gl -6"
 alias ll="ls -lha"
-
 # slap a title on tmux
 titledmux() { set-window-title $2 ; tmuxinator "$@" ; }
 alias mux=titledmux
@@ -93,12 +92,12 @@ theend () {
 }
 
 # Set the list of directories that Zsh searches for programs.
+#  $(ruby -rubygems -e "puts Gem.user_dir")/bin
 path=(
   /usr/local/{bin,sbin}
   ~/emacs/bin
   "/c/Program Files/Sublime Text 3"
   "/c/Program Files/nodejs"
-  $(ruby -rubygems -e "puts Gem.user_dir")/bin
   $path
 )
 
@@ -133,4 +132,39 @@ function color_maven() {
     return $PIPESTATUS
 }
 
+# aliases
 alias mvn=color_maven
+
+alias gws='git status --ignore-submodules=${_git_status_ignore_submodules} --short -b'
+alias gll="gl -6"
+alias mci="mvn clean install"
+
+alias env-elementar=". ~/.env/elementar.sh"
+alias env-elementar-pkg=". ~/.env/elementar-pkg.sh"
+alias env-vjames=". ~/.env/vjames.sh"
+alias env-encores=". ~/.env/encores.sh"
+
+function doin() {
+  local YELLOW="[1;33m"
+  local NO_COLOUR="[0m"
+  if [ ! -d "$1" ]; then
+    echo "Directory does not exist"; return
+  fi
+  echo $YELLOW$1$NO_COLOUR
+  pushd "$1" > /dev/null
+  shift
+  eval "$@"
+  if [[ "$?" -ne 0 ]] ; then
+    echo "Failed command"; return
+  fi
+  popd > /dev/null
+}
+alias d=doin
+
+function forall() {
+  for d in */ ; do
+    doin "$d" $@
+  done
+}
+alias f=forall
+

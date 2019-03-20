@@ -1,34 +1,6 @@
 #!/usr/bin/bash
 source ~/.env/ngi.sh
-echo "elementar dev"
-
-function doin() {
-  local YELLOW="[1;33m"
-  local NO_COLOUR="[0m"
-  echo $YELLOW$1$NO_COLOUR
-  if [ ! -d "$1" ]; then
-    echo "Directory does not exist"; return
-  fi
-  pushd "$1" > /dev/null
-  shift
-  eval "$@"
-  if [[ "$?" -ne 0 ]] ; then
-    echo "Failed command"; return
-  fi
-  popd > /dev/null
-}
-alias d=doin
-
-function forsome() {
-  dirs=$1
-  shift
-  for d in $dirs*/ ; do
-    doin "$d" $@
-  done
-}
-alias fs=forsome
-alias f="forsome '*'"
-
+echo -ne "\e]0;elementar dev\a"
 
 export NGI_MODULES_DBMS=db2
 export NGI_MODULES_APP=was
@@ -54,3 +26,4 @@ alias s-build-all="mvn clean install -DskipTests -f de.bit.elementar.schaden.sys
 alias s-system-reset="mvn clean install -DskipTests -Pde.novum.ngi.pkg.system-reset -f de.bit.elementar.schaden.system"
 
 cd $ELEMENTAR_SRC
+zsh
