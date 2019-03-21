@@ -1,37 +1,45 @@
 #
 # Executes commands at the start of an interactive session.
 #
+#AGKOZAK_PROMPT_DEBUG=1
 
-# Source zplug.
-source ~/.zplug/init.zsh
+### Added by Zplugin's installer
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin's installer chunk
 
-zplug "modules/environment", from:prezto
-zplug "modules/terminal", from:prezto
-zplug "modules/editor", from:prezto
-zplug "modules/history", from:prezto
-zplug "modules/directory", from:prezto
-zplug "modules/spectrum", from:prezto
-zplug "modules/utility", from:prezto
-zplug "modules/completion", from:prezto
-zplug "modules/git", from:prezto
-zplug "modules/ruby", from:prezto
-zplug "modules/syntax-highlighting", from:prezto
-zplug "modules/history-substring-search", from:prezto
-#zplug "modules/autosuggestions", from:prezto
-zplug "modules/prompt", from:prezto
-zplug "hkupty/ssh-agent"
-zplug "psprint/history-search-multi-word"
+zstyle ':prezto:*:*' color 'yes'
+zplugin ice svn silent; zplugin snippet PZT::modules/environment
+zplugin ice svn silent; zplugin snippet PZT::modules/terminal
+zplugin ice svn silent; zplugin snippet PZT::modules/editor
+zplugin ice svn silent; zplugin snippet PZT::modules/history
+zplugin ice svn silent; zplugin snippet PZT::modules/directory
+zplugin ice svn silent; zplugin snippet PZT::modules/spectrum
+zplugin ice svn silent; zplugin snippet PZT::modules/utility
+zplugin ice svn silent; zplugin snippet PZT::modules/completion
+zplugin ice svn silent; zplugin snippet PZT::modules/git
+#zstyle ':prezto:module:prompt' theme steeef
+#zplugin snippet PZT::modules/helper/init.zsh
+#zplugin ice svn silent; zplugin snippet PZT::modules/prompt
+zplugin ice svn silent; zplugin snippet OMZ::plugins/mvn
+zplugin light "zsh-users/zsh-completions"
+zplugin light "zsh-users/zsh-autosuggestions"
+autoload -Uz compinit
+compinit
+zplugin light "agkozak/agkozak-zsh-prompt"
+zplugin light "zsh-users/zsh-history-substring-search"
+#zplugin light "zsh-users/zsh-syntax-highlighting"
+zplugin light "zdharma/fast-syntax-highlighting"
+zplugin light "psprint/zsh-select"
+zplugin light "psprint/history-search-multi-word"
+zplugin light "hkupty/ssh-agent"
 
 # Color output (auto set to 'no' on dumb terminals).
-zstyle ':prezto:*:*' color 'yes'
-
-# Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' key-bindings 'emacs'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'steeef'
 
 # Windows
 zstyle ':completion:*' fake-files   '/:c' '/:d' '/:e' '/:p' '/:s'
@@ -40,17 +48,15 @@ zstyle ':omz:plugins:ssh-agent' identities 'private-id_rsa' 'nov015223-ossh' 'no
 
 #zstyle ':prezto:module:terminal' auto-title 'yes'
 
+AGKOZAK_PROMPT_DIRTRIM=4
+#AGKOZAK_LEFT_PROMPT_ONLY=1
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
+AGKOZAK_CUSTOM_PROMPT='%(?..%B%F{red}(%?%)%f%b )'
+AGKOZAK_CUSTOM_PROMPT+='%(!.%S%B.%B%F{green})%n%1v%(!.%b%s.%f%b) '
+AGKOZAK_CUSTOM_PROMPT+=$'%B%F{blue}%2v%f%b%(3V.%F{yellow}%3v%f.)\n'
+AGKOZAK_CUSTOM_PROMPT+='%(4V.:.%#) '
 
-# Then, source plugins and add commands to $PATH
-zplug load --verbose
+AGKOZAK_CUSTOM_RPROMPT='%F{blue}%*%f'
 
 
 # Customize to your needs...
@@ -108,27 +114,31 @@ export SHELL=/usr/bin/zsh
 # Colorize Maven Output
 alias maven="command mvn"
 function color_maven() {
-    local MAGENTA="[1;35m"
-    local PURPLE="[0;35m"
-    local BLUE="[0;34m"
-    local GRAY="[0;32m"
+    local DARK_GRAY="[1;30m"
     local RED="[0;31m"
-    local HIGH_RED="[0;33m"
     local LIGHT_RED="[1;31m"
-    local LIGHT_GRAY="[0;37m"
-    local LIGHT_GREEN="[1;32m"
+    local GREEN="[0;32m"
+    local YELLOW="[1;32m"
+    local PINK="[0;33m"
+    local ORANGE="[1;33m"
+    local BLUE="[0;34m"
     local LIGHT_BLUE="[1;34m"
+    local PURPLE="[0;35m"
+    local MAGENTA="[1;35m"
+    local DARK_CYAN="[0;36m"
     local LIGHT_CYAN="[1;36m"
-    local YELLOW="[1;33m"
+    local LIGHT_GRAY="[0;37m"
     local WHITE="[1;37m"
     local NO_COLOUR="[0m"
     maven "$@" | sed \
         -e "s/Tests run: \([^,]*\), Failures: \([^,]*\), Errors: \([^,]*\), Skipped: \([^,]*\)/${LIGHT_GREEN}Tests run: \1$NO_COLOUR, Failures: $RED\2$NO_COLOUR, Errors: $YELLOW\3$NO_COLOUR, Skipped: $LIGHT_BLUE\4$NO_COLOUR/g" \
-        -e "s/\(\[\{0,1\}WARN\(ING\)\{0,1\}\]\{0,1\}.*\)/$YELLOW\1$NO_COLOUR/g" \
+        -e "s/\(\[\{0,1\}WARN\(ING\)\{0,1\}\]\{0,1\}.*\)/$ORANGE\1$NO_COLOUR/g" \
         -e "s/\(\[ERROR\].*\)/$RED\1$NO_COLOUR/g" \
         -e "s/\(\(BUILD \)\{0,1\}FAILURE.*\)/$RED\1$NO_COLOUR/g" \
         -e "s/\(\(BUILD \)\{0,1\}SUCCESS.*\)/$GREEN\1$NO_COLOUR/g" \
-        -e "s/\(\[INFO\].*\)/$LIGHT_GRAY\1$NO_COLOUR/g"
+        -e "s/\(\[INFO\].*\)/$LIGHT_GRAY\1$NO_COLOUR/g" \
+        -e "s/\(\[INFO\]\)\( ---.*---\)/$LIGHT_GRAY\1$LIGHT_CYAN\2$NO_COLOUR/g" \
+        -e "s/\(Building\)\(.*\)/\1$YELLOW\2$NO_COLOUR/g"
     return $PIPESTATUS
 }
 
@@ -145,7 +155,7 @@ alias env-vjames=". ~/.env/vjames.sh"
 alias env-encores=". ~/.env/encores.sh"
 
 function doin() {
-  local YELLOW="[1;33m"
+  local YELLOW="[1;32m"
   local NO_COLOUR="[0m"
   if [ ! -d "$1" ]; then
     echo "Directory does not exist"; return
@@ -167,4 +177,3 @@ function forall() {
   done
 }
 alias f=forall
-
