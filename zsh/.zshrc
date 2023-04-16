@@ -44,7 +44,7 @@ zplugin light "hkupty/ssh-agent"
 # Windows
 zstyle ':completion:*' fake-files   '/:c' '/:d' '/:e' '/:p' '/:s'
 
-zstyle ':omz:plugins:ssh-agent' identities 'private-id_rsa' 'nov015223-ossh' 'nov013462-ossh' 'id_rsa-old'
+zstyle ':omz:plugins:ssh-agent' identities 'private-id_rsa' 'nov015223-ossh' 'nov013462-ossh' 'id_rsa-old' 'id_rsa'
 
 #zstyle ':prezto:module:terminal' auto-title 'yes'
 
@@ -56,7 +56,7 @@ AGKOZAK_CUSTOM_PROMPT+='%(!.%S%B.%B%F{green})%n%1v%(!.%b%s.%f%b) '
 AGKOZAK_CUSTOM_PROMPT+=$'%B%F{blue}%2v%f%b%(3V.%F{yellow}%3v%f.)\n'
 AGKOZAK_CUSTOM_PROMPT+='%(4V.:.%#) '
 
-AGKOZAK_CUSTOM_RPROMPT='%F{blue}%*%f'
+AGKOZAK_CUSTOM_RPROMPT='%F{cyan}%*%f'
 
 
 # Customize to your needs...
@@ -101,7 +101,6 @@ theend () {
 #  $(ruby -rubygems -e "puts Gem.user_dir")/bin
 path=(
   /usr/local/{bin,sbin}
-  ~/emacs/bin
   "/c/Program Files/Sublime Text 3"
   "/c/Program Files/nodejs"
   $path
@@ -155,7 +154,7 @@ alias gll="gl -6"
 alias mci="mvn clean install"
 
 function doin() {
-  local YELLOW="[1;32m"
+  local YELLOW="[1;33m"
   local NO_COLOUR="[0m"
   if [ ! -d "$1" ]; then
     echo "Directory does not exist"; return
@@ -165,25 +164,60 @@ function doin() {
   shift
   eval "$@"
   if [[ "$?" -ne 0 ]] ; then
-    echo "Failed command"; return
+      if [[ "$ignore_failures" -eq 1 ]] ; then
+          return 1
+      fi
   fi
   popd > /dev/null
 }
 alias d=doin
 
 function forall() {
+  ignore_failures=1
   for d in */ ; do
     doin "$d" $@
+    if [[ "$?" -ne 0 ]] ; then
+        echo "Command failed"; return 1
+    fi
   done
 }
 alias f=forall
 
-# elementar
-alias b-pc="mvn clean install -DskipTests -f de.novum.vger.pc/core"
-alias b-ele="mvn clean install -DskipTests -f de.bit.elementar"
-alias b-ver="mvn clean install -DskipTests -f de.bit.elementar.vertrag"
-alias b-sch="mvn clean install -DskipTests -f de.bit.elementar.schaden.system"
-alias b-sys="mvn clean install -DskipTests -f de.bit.elementar.system"
+function forall_failsafe() {
+  ignore_failures=0
+  for d in */ ; do
+    doin "$d" $@
+  done
+}
+alias fs=forall_failsafe
 
-alias b-all-ver="b-pc && b-ele && b-ver"
-alias b-all-ver-was="b-all-ver -DNGI_MODULES_APP=was"
+# elementar
+alias bpc='mci -DskipTests -f de.novum.vger.pc'
+alias bele='mci -DskipTests -f de.bit.elementar'
+alias bsch='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.bit.elementar.schaden.system'
+alias bsys='mci -DskipTests -DNGI_MODULES_APP=was -f de.bit.elementar.system'
+alias bver='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.bit.elementar.vertrag'
+source /c/dev/elementar/workspace/de.bit.elementar.vertrag/system/it/src/test/resources/de/bit/elementar/vertrag/system/it/clients/batches/sapicm/scripts/replace-fns.sh
+
+alias lein=/c/private/lein/bin/lein.bat
+
+# ruv
+alias brpoc='mci -DskipTests -f de.ruv.poc'
+alias brver='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.ruv.poc.vertrag'
+
+# wuerzburger
+export WUR_HOME=/c/dev/wuerzburger
+alias wur-db-start='bash $WUR_HOME/workspace/de.novum.vger.pc.vertrag/system/container/db/src/bin/local-entrypoint.sh &> $WUR_HOME/logs/db.log &'
+alias wur-backend-start='bash $WUR_HOME/workspace/de.novum.vger.pc.vertrag/system/container/vger/src/bin/local-entrypoint.sh &> $WUR_HOME/logs/backend.log &'
+alias wur-frontend-start='bash $WUR_HOME/workspace/de.novum.vger.pc.vertrag/system/container/ewc/src/bin/local-entrypoint.sh &> $WUR_HOME/logs/frontend.log &'
+alias wur-db-stop='bash $WUR_HOME/workspace/de.novum.vger.pc.vertrag/system/container/db/src/bin/local-stop.sh &'
+alias wur-backend-stop='bash $WUR_HOME/workspace/de.novum.vger.pc.vertrag/system/container/vger/src/bin/local-stop.sh &'
+alias wur-frontend-stop='bash $WUR_HOME/workspace/de.novum.vger.pc.vertrag/system/container/ewc/src/bin/local-stop.sh &'
+
+alias bpcc='mci -DskipTests -f de.novum.vger.pc.commons'
+alias bpcv='mci -DskipTests -f de.novum.vger.pc.vertrag -Pwildfly.deploy'
+
+# general
+function title {
+  echo -ne "\e]0;$1\a"
+}

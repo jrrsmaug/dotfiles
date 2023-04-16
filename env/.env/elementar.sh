@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 source ~/.env/ngi.sh
-echo -ne "\e]0;elementar dev\a"
+echo -ne "\e]0;ele dev\a"
 
 export NGI_MODULES_DBMS=db2
 export NGI_MODULES_APP=was
@@ -14,4 +14,4 @@ export SSYS=$ELEMENTAR_SRC/de.bit.elementar.schaden.system
 export PC=$ELEMENTAR_SRC/de.novum.vger.pc
 
 cd $ELEMENTAR_SRC
-#zsh
+zsh

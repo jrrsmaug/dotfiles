@@ -1,4 +1,4 @@
-set path=/usr/bin:"/c/Program Files/Sublime Text 3":$path
+export PATH=/usr/bin:"/c/Program Files/Sublime Text 3":$PATH
 
 alias du='du -kh'    # Makes a more readable output.
 alias df='df -kTh'
@@ -172,7 +172,8 @@ alias gwX='git rm -rf'
 alias gll="gl -6"
 
 # Timezone for Msysgit
-export TZ=GST-1GDT date
+#export TZ=GST-1GDT date
+export TZ=GST-0GDT date
 
 #export JAVA_HOME="/c/ngi/opt/modules/lang/java/jdk1.8.0_121_x64"
 
@@ -218,7 +219,7 @@ alias edit='"/c/Program Files/Sublime Text 3/subl.exe"'
 
 source ~/dotfiles/bash/fuzzy_bash_completion
 
-fuzzy_setup_for_command cd 
+fuzzy_setup_for_command cd
 
 function doin() {
   local YELLOW="[1;32m"
@@ -244,18 +245,20 @@ function forall() {
 }
 alias f=forall
 
-alias env-elementar=". ~/.env/elementar.sh"
-alias env-elementar-pkg-vertrag=". ~/.env/elementar-pkg-vertrag.sh"
-alias env-elementar-pkg-schaden=". ~/.env/elementar-pkg-schaden.sh"
-alias env-elementar-start-servers=". ~/.env/elementar-admin-servers.sh"
+alias eele=". ~/.env/elementar.sh"
+alias eele-pkg-vertrag=". ~/.env/elementar-pkg-vertrag.sh"
+alias eele-pkg-schaden=". ~/.env/elementar-pkg-schaden.sh"
+alias eele-start-servers=". ~/.env/elementar-admin-servers.sh"
 
-alias env-vjames=". ~/.env/vjames.sh"
-alias env-encores=". ~/.env/encores.sh"
-alias env-private=". ~/.env/private.sh"
+alias evjames=". ~/.env/vjames.sh"
+alias eencores=". ~/.env/encores.sh"
+alias eprivate=". ~/.env/private.sh"
 
-alias bele='mci -DskipTests -f de.bit.elementar'
-alias bpc='mci -DskipTests -f de.novum.vger.pc'
-alias bsch='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.bit.elementar.schaden.system'
-alias bsys='mci -DskipTests -DNGI_MODULES_APP=was -f de.bit.elementar.system'
-alias bver='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.bit.elementar.vertrag'
+alias eruv=". ~/.env/ruv.sh"
+alias eruv-pkg-vertrag=". ~/.env/ruv-pkg-vertrag.sh"
+alias eruv-start-servers=". ~/.env/ruv-admin-servers.sh"
 
+alias eac=". ~/.env/ac.sh"
+
+alias ewur=". ~/.env/wur.sh"
+alias ewur-start-servers=". ~/.env/wur-start-servers.sh"
