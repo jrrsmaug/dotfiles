@@ -2,5 +2,5 @@
 source ~/.env/ngi.sh
 echo -ne "\e]0;vjames dev\a"
 
-cd /d/vjames/workspace/vjames
+cd /c/dev/vjames/workspace/vjames
 zsh

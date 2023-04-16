@@ -9,7 +9,7 @@ function stop-all {
 	bash pkg/bin/stop-frontend.sh
 }
 
-export ELEMENTAR_HOME=/d/elementar
+export ELEMENTAR_HOME=/c/dev/elementar
 export WORKSPACE_HOME=$ELEMENTAR_HOME/workspace
 export M2_HOME=$NGI_HOME/modules/build/maven/apache-maven-3.2.5
 export NGI_MODULES_DBMS=postgresql

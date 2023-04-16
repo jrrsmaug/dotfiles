@@ -1,3 +1,5 @@
+set path=/usr/bin:"/c/Program Files/Sublime Text 3":$path
+
 alias du='du -kh'    # Makes a more readable output.
 alias df='df -kTh'
 
@@ -214,11 +216,46 @@ alias mci="mvn clean install"
 
 alias edit='"/c/Program Files/Sublime Text 3/subl.exe"'
 
-alias env-elementar=". ~/.env/elementar.sh"
-alias env-elementar-pkg=". ~/.env/elementar-pkg.sh"
-alias env-vjames=". ~/.env/vjames.sh"
-alias env-encores=". ~/.env/encores.sh"
-
 source ~/dotfiles/bash/fuzzy_bash_completion
 
 fuzzy_setup_for_command cd 
+
+function doin() {
+  local YELLOW="[1;32m"
+  local NO_COLOUR="[0m"
+  if [ ! -d "$1" ]; then
+    echo "Directory does not exist"; return
+  fi
+  echo $YELLOW$1$NO_COLOUR
+  pushd "$1" > /dev/null
+  shift
+  eval "$@"
+  if [[ "$?" -ne 0 ]] ; then
+    echo "Failed command"; return
+  fi
+  popd > /dev/null
+}
+alias d=doin
+
+function forall() {
+  for d in */ ; do
+    doin "$d" $@
+  done
+}
+alias f=forall
+
+alias env-elementar=". ~/.env/elementar.sh"
+alias env-elementar-pkg-vertrag=". ~/.env/elementar-pkg-vertrag.sh"
+alias env-elementar-pkg-schaden=". ~/.env/elementar-pkg-schaden.sh"
+alias env-elementar-start-servers=". ~/.env/elementar-admin-servers.sh"
+
+alias env-vjames=". ~/.env/vjames.sh"
+alias env-encores=". ~/.env/encores.sh"
+alias env-private=". ~/.env/private.sh"
+
+alias bele='mci -DskipTests -f de.bit.elementar'
+alias bpc='mci -DskipTests -f de.novum.vger.pc'
+alias bsch='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.bit.elementar.schaden.system'
+alias bsys='mci -DskipTests -DNGI_MODULES_APP=was -f de.bit.elementar.system'
+alias bver='mci -DskipTests -DNGI_MODULES_APP=was -Pde.novum.ngi.modules.app.was-deploy -f de.bit.elementar.vertrag'
+
